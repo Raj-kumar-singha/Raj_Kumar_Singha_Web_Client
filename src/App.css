@@ -1,0 +1,21 @@
+.Header {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.Hamburger_Icon.btn-circle.btn{
+  border: transparent;
+  background-color: transparent;
+}
+
+.footer {
+  /* bottom: 0;
+  left: 0;
+  position: fixed; */
+  background-color: transparent;
+}
+
+.appbody {
+  margin-top: 70px;
+}
