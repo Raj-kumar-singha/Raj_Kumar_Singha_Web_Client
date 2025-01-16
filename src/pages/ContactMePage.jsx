@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { BsFillHouseFill, BsTelephone } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import PageBanner from "../components/PageBanner";
+import { BsHouseDoor, BsTelephone } from "react-icons/bs";
 
 const ContactMePage = () => {
     const [formData, setFormData] = useState({
@@ -36,43 +36,28 @@ const ContactMePage = () => {
         }
     };
 
+    const BannerData = {
+        heading: "Contact Me",
+        backgroundUrl: "/contact-banner.jpg",
+        breadcrumbs: [
+            {
+                link: "/",
+                linkText: "Home",
+                icon: BsHouseDoor,
+            },
+            {
+                link: "/contact-me",
+                linkText: "Contact Me",
+                icon: BsTelephone,
+
+            },
+        ],
+    }
+
     return (
-        <div style={{ marginTop: "72px" }}>
+        <div className="appbody">
             {/* Banner Section */}
-            < div className="relative w-full h-64 mb-8" >
-                <img
-                    src="/contact-banner.jpg"
-                    alt="Contact Me Banner"
-                    className="w-full h-full object-fill rounded-lg"
-                />
-                <div className="absolute inset-0 bg-black opacity-50 flex justify-center items-center">
-                    <div className="text-center">
-                        <h1 className="text-white text-4xl font-bold mb-4">Contact Me</h1>
-                        <div className="breadcrumbs text-sm text-white mb-8">
-                            <ul className="flex justify-center space-x-2 cursor-pointer">
-                                <li className="cursor-pointer">
-                                    <Link
-                                        to="/"
-                                        className="hover:underline text-white-600 flex items-center"
-                                    >
-                                        <BsFillHouseFill className="mr-1" />
-                                        Home
-                                    </Link>
-                                </li>
-                                <li className="cursor-pointer">
-                                    <Link
-                                        to="/contact-me"
-                                        className="hover:underline text-white-600 flex items-center"
-                                    >
-                                        <BsTelephone className="mr-1" />
-                                        Contact Me
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </ div>
+            < PageBanner BannerData={BannerData} />
             <div className="container mx-auto px-4 py-8">
 
                 {/* Contact Form Section */}
@@ -160,7 +145,7 @@ const ContactMePage = () => {
                             className="w-full h-full rounded-lg shadow-lg"
                             title="Google Map"
                             loading="lazy"
-                            
+
                             referrerPolicy="no-referrer"
                             sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                         ></iframe>
