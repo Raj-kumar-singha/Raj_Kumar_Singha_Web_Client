@@ -1,40 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const HomePage = () => {
-    const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
-    const user = JSON.parse(localStorage.getItem('user'));
+    const [showSubText, setShowSubText] = useState(false);
+    const [showCredit, setShowCredit] = useState(false);
+    const [darkMode, setDarkMode] = useState(false);
+
+    useEffect(() => {
+        const subTextTimer = setTimeout(() => setShowSubText(true), 2500);
+        const creditTimer = setTimeout(() => setShowCredit(true), 5000);
+        return () => {
+            clearTimeout(subTextTimer);
+            clearTimeout(creditTimer);
+        };
+    }, []);
+
+    const toggleDarkMode = () => setDarkMode(!darkMode);
 
     return (
-        <div className="appbody flex flex-col items-center justify-center min-h-[93vh] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-black">
-            <div className="text-center p-6">
-                <h1 className="text-5xl font-extrabold tracking-tight mb-4">
-                    Welcome to the <span className="text-yellow-300">Cool Kids Network</span>
+        <div className={`appbody flex flex-col items-center justify-center min-h-[93vh] ${darkMode ? 'bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white' : 'bg-gradient-to-r from-blue-100 via-purple-200 to-pink-200 text-gray-900'} animate-gradient`}>
+            <button onClick={toggleDarkMode} className="absolute top-4 right-4 px-4 py-2 bg-gray-300 dark:bg-gray-700 text-black dark:text-white rounded-full shadow-md hover:bg-gray-400 dark:hover:bg-gray-600 transition-all">
+                {darkMode ? 'Light Mode' : 'Dark Mode'}
+            </button>
+
+            <div className="text-center p-4">
+                <h1 className="text-6xl font-extrabold tracking-wide mb-10 drop-shadow-lg animate-dropAndExpand">
+                    Welcome to My Digital Space
                 </h1>
-                <p className="text-xl font-medium opacity-90">
-                    A place where creativity, fun, and community come together.
-                </p>
+                {showSubText && (
+                    <p className="text-lg font-light opacity-90 max-w-xl mx-auto animate-zoomIn">
+                        Exploring technology, creativity, and innovation. Join me on this journey to build and inspire.
+                    </p>
+                )}
+                {showCredit && (
+                    <p className="text-md text-gray-600 dark:text-gray-300 mt-8 border-b-2 border-dotted border-gray-400 dark:border-gray-600 transition-all duration-300 animate-slideInFromLeft">
+                        Developed by <Link to="/about" className="hover:text-blue-500">Raj Kumar Singha</Link>
+                    </p>
+                )}
             </div>
-            {!isLoggedIn ? (
-                <div className="flex flex-row items-center mt-6 gap-x-4">
-                    <Link to="/signup" className="btn bg-yellow-300 hover:bg-yellow-400 text-black px-6 py-2 rounded-lg font-semibold shadow-md">
-                        Sign Up
-                    </Link>
-                    <Link to="/login" className="btn bg-yellow-300 hover:bg-yellow-400 text-black px-6 py-2 rounded-lg font-semibold shadow-md">
-                        Log In
-                    </Link>
-                </div>
-            ) : (user?.User?.role === 'admin' ? (<div className="flex flex-row items-center mt-6 gap-x-4">
-                <Link to="/maintainer-dashboard" className="btn bg-yellow-300 hover:bg-yellow-400 text-black px-6 py-2 rounded-lg font-semibold shadow-md">
-                    Maintainer Dashboard
-                </Link>
-            </div>) : (<div className="flex flex-row items-center mt-6 gap-x-4">
-                <Link to="/dashboard" className="btn bg-yellow-300 hover:bg-yellow-400 text-black px-6 py-2 rounded-lg font-semibold shadow-md">
-                    Dashboard
-                </Link>
-            </div>))}
         </div>
     );
 };
 
 export default HomePage;
+

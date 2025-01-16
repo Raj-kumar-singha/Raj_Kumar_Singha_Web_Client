@@ -64,6 +64,7 @@ const Header = () => {
                         <li><Link to={'/blogs'}>Blog</Link></li>
                         <li><Link to={'/gallery'}>Gallery</Link></li>
                         <li><Link to={'/about'}>About</Link></li>
+                        <li><Link to={'/contact-me'}>Contact Me</Link></li>
                     </ul>
                 </div>
                 <Link className="btn btn-ghost text-xl" to={'/'}>Raj</Link>
@@ -75,6 +76,7 @@ const Header = () => {
                     <li><Link to={'/blogs'}>Blog</Link></li>
                     <li><Link to={'/gallery'}>Gallery</Link></li>
                     <li><Link to={'/about'}>About</Link></li>
+                    <li><Link to={'/contact-me'}>Contact Me</Link></li>
                 </ul>
             </div>
 
