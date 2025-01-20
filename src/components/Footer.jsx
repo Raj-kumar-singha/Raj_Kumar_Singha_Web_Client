@@ -1,5 +1,5 @@
 import React from 'react';
-import { BsChevronDoubleUp, BsCupStraw, BsFacebook, BsGit, BsGithub, BsInstagram, BsTwitterX, BsWhatsapp, BsYoutube } from "react-icons/bs";
+import { BsChevronDoubleUp, BsCupStraw, BsFacebook, BsGithub, BsInstagram, BsLinkedin, BsTwitterX, BsWhatsapp, BsYoutube } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -31,23 +31,26 @@ const Footer = () => {
                 <div className="flex flex-col items-center">
                     <b className="text-lg mb-4 FooterHeaderText">Follow Me</b>
                     <div className="flex flex-col gap-3">
-                        <Link to="/" className="flex items-center gap-2 hover:text-gray-700">
+                        <Link to="https://github.com/Raj-kumar-singha" target='_blank' className="flex items-center gap-2 hover:text-gray-700">
                             <BsGithub size={24} /> Github
                         </Link>
-                        <Link to="/" className="flex items-center gap-2 hover:text-blue-400">
-                            <BsTwitterX size={24} /> Twitter
+                        <Link to="https://twitter.com/Rajkuma48617284" target='_blank' className="flex items-center gap-2 hover:text-blue-500">
+                            <BsTwitterX size={22} /> Twitter
                         </Link>
-                        <Link to="/" className="flex items-center gap-2 hover:text-red-500">
-                            <BsYoutube size={24} /> YouTube
+                        <Link to="https://in.linkedin.com/in/raj-kumar-singha-63a7b5169" target="_blank" className="flex items-center gap-2 hover:text-blue-700" >
+                            <BsLinkedin size={22} /> LinkedIn
                         </Link>
-                        <Link to="/" className="flex items-center gap-2 hover:text-blue-500">
-                            <BsFacebook size={24} /> Facebook
+                        <Link to="https://www.youtube.com/@officialoneway" target='_blank' className="flex items-center gap-2 hover:text-red-500">
+                            <BsYoutube size={22} /> YouTube
                         </Link>
-                        <Link to="/" className="flex items-center gap-2 hover:text-pink-500">
-                            <BsInstagram size={24} /> Instagram
+                        <Link to="https://www.facebook.com/Raj.Kumar.Singha.05" target='_blank' className="flex items-center gap-2 hover:text-blue-500">
+                            <BsFacebook size={22} /> Facebook
                         </Link>
-                        <Link to="/" className="flex items-center gap-2 hover:text-green-500">
-                            <BsWhatsapp size={24} /> WhatsApp
+                        <Link to="https://www.instagram.com/itj_raj.kumar" target="_blank" className="flex items-center gap-2 hover:text-pink-500">
+                            <BsInstagram size={22} /> Instagram
+                        </Link>
+                        <Link to="https://wa.me/919083960663?text=Hi Raj." target='_blank' className="flex items-center gap-2 hover:text-green-500">
+                            <BsWhatsapp size={22} /> WhatsApp
                         </Link>
                     </div>
                 </div>
@@ -111,7 +114,7 @@ export default Footer;
 // <footer className="footer footer-center p-10">
 //     <div onClick={scrollToTop} className="flex justify-center items-center">
 //         <Link to="/" className="flex flex-col items-center gap-1 text-gray-700 hover:text-blue-500">
-//             <BsChevronDoubleUp size={24} />
+//             <BsChevronDoubleUp size={22} />
 //             <b>Back To Top</b>
 //         </Link>
 //     </div>
@@ -137,19 +140,19 @@ export default Footer;
 //     <nav>
 //         <div className="grid grid-flow-col gap-4">
 //             <Link>
-//                 <BsFacebook size={24} />
+//                 <BsFacebook size={22} />
 //             </Link>
 //             <Link>
-//                 <BsInstagram size={24} />
+//                 <BsInstagram size={22} />
 //             </Link>
 //             <Link>
-//                 <BsTwitterX size={24} />
+//                 <BsTwitterX size={22} />
 //             </Link>
 //             <Link>
-//                 <BsYoutube size={24} />
+//                 <BsYoutube size={22} />
 //             </Link>
 //             <Link>
-//                 <BsWhatsapp size={24} />
+//                 <BsWhatsapp size={22} />
 //             </Link>
 //         </div>
 //     </nav>
