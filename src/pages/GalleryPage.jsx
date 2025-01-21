@@ -3,143 +3,24 @@ import { BsHouseDoor, BsImages, BsX, BsZoomIn } from 'react-icons/bs';
 import PageBanner from '../components/PageBanner';
 import Modal from 'react-modal';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import initialData from '../datas/galleryData.json'
 
 Modal.setAppElement("#root");
 
 const GalleryPage = () => {
-    const initialData = [
-        {
-            id: 1,
-            url: "https://pagedone.io/asset/uploads/1688025668.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 2,
-            url: "https://pagedone.io/asset/uploads/1688029344.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 3,
-            url: "https://pagedone.io/asset/uploads/1688029370.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 4,
-            url: "https://pagedone.io/asset/uploads/1688029384.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 5,
-            url: "https://pagedone.io/asset/uploads/1688029394.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 6,
-            url: "https://pagedone.io/asset/uploads/1688029434.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 7,
-            url: "https://pagedone.io/asset/uploads/1688029424.jpg ",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 8,
-            url: "https://pagedone.io/asset/uploads/1688029447.jpg",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 9,
-            url: "https://pagedone.io/asset/uploads/1688029408.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 10,
-            url: "https://pagedone.io/asset/uploads/1688029384.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 11,
-            url: "https://pagedone.io/asset/uploads/1688025668.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 12,
-            url: "https://pagedone.io/asset/uploads/1688029344.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 13,
-            url: "https://pagedone.io/asset/uploads/1688029370.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 14,
-            url: "https://pagedone.io/asset/uploads/1688029384.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 15,
-            url: "https://pagedone.io/asset/uploads/1688029394.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 16,
-            url: "https://pagedone.io/asset/uploads/1688029434.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 17,
-            url: "https://pagedone.io/asset/uploads/1688029424.jpg ",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 18,
-            url: "https://pagedone.io/asset/uploads/1688029447.jpg",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 19,
-            url: "https://pagedone.io/asset/uploads/1688029408.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-        {
-            id: 20,
-            url: "https://pagedone.io/asset/uploads/1688029384.png",
-            location: "kolkata",
-            date: "25-01-2025"
-        },
-    ]
     const [galleryData, setGalleryData] = useState(initialData);
-    const [modalImage, setModalImage] = useState(null);
     const [hasMore, setHasMore] = useState(true);
+    const [selectedImage, setSelectedImage] = useState(null);
 
-    const closeModal = () => {
-        setModalImage(null);
-    }
+    const openDialog = (image) => {
+        setSelectedImage(image);
+        document.getElementById("imageDialog").showModal();
+    };
 
-    const openModal = (imageUrl) => {
-        setModalImage(imageUrl);
-    }
+    const closeDialog = () => {
+        setSelectedImage(null);
+        document.getElementById("imageDialog").close();
+    };
 
     const loadMoreImages = () => {
         if (galleryData.length >= 8) {
@@ -153,6 +34,7 @@ const GalleryPage = () => {
             ]);
         }, 2000);
     };
+
     const BannerData = {
         heading: 'Gallery',
         backgroundUrl: '/gallery.webp',
@@ -196,13 +78,14 @@ const GalleryPage = () => {
                                     src={image.url}
                                     alt={`Gallery ${image.id}`}
                                     className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                                    onClick={() => openDialog(image)}
                                 />
 
                                 {/* Hover Details */}
                                 <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                     <div
                                         className="p-3 bg-white rounded-full cursor-pointer"
-                                        onClick={() => openModal(image.url)}
+                                        onClick={() => openDialog(image)}
                                     >
                                         <BsZoomIn size={24} />
                                     </div>
@@ -216,24 +99,29 @@ const GalleryPage = () => {
             </div>
 
             {/* Image Modal */}
-            <Modal
-                isOpen={!!modalImage}
-                className="fixed inset-0 flex items-center justify-center bg-gray bg-opacity-75"
-                overlayClassName="fixed inset-0 bg-black bg-opacity-50 "
-                contentLabel="Modal onRequestClose Example"
-                onRequestClose={closeModal}
-                shouldCloseOnOverlayClick={true}
+            <dialog
+                id="imageDialog"
+                className="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+                onClick={(e) => {
+                    if (e.target.id === "imageDialog") closeDialog();
+                }}
             >
-                <div className="relative">
-                    <img src={modalImage} alt="Enlarged" className="max-w-full max-h-full" />
+                <div className="modal-box relative p-0 rounded-lg">
                     <button
-                        onClick={closeModal}
-                        className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md"
+                        onClick={closeDialog}
+                        className="absolute top-1 right-1 bg-gray-200 p-2 rounded-full hover:bg-gray-300"
                     >
-                        <BsX size={24} />
+                        <BsX size={24} style={{ fontWeight: 900 }} />
                     </button>
+                    {selectedImage && (
+                        <img
+                            src={selectedImage.url}
+                            alt={`Enlarged`}
+                            className="max-w-full max-h-full rounded-lg"
+                        />
+                    )}
                 </div>
-            </Modal >
+            </dialog>
         </div >
     );
 };
