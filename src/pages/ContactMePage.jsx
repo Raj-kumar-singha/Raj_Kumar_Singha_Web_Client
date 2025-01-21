@@ -38,7 +38,7 @@ const ContactMePage = () => {
 
     const BannerData = {
         heading: "Contact Me",
-        backgroundUrl: "/contact-banner.jpg",
+        backgroundUrl: "/contact-banner.webp",
         breadcrumbs: [
             {
                 link: "/",
@@ -65,7 +65,7 @@ const ContactMePage = () => {
                     {/* Left Image */}
                     <div className="flex justify-center items-center">
                         <img
-                            src="/Contactme.jpg" // Replace with your actual image
+                            src="/Contactme.webp"
                             alt="Contact Image"
                             className="rounded-lg shadow-lg w-full md:w-3/4"
                         />

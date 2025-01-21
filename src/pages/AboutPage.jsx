@@ -6,7 +6,7 @@ const AboutPage = () => {
 
     const BannerData = {
         heading: "About Me",
-        backgroundUrl: "/contact-banner.jpg",
+        backgroundUrl: "/about-me.webp",
         breadcrumbs: [
             {
                 link: "/",
