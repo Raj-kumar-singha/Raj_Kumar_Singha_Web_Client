@@ -18,7 +18,8 @@ const PageBanner = ({ BannerData }) => {
                         <div className="breadcrumbs text-sm text-white mb-8">
                             <ul className="flex justify-center space-x-2 cursor-pointer">
                                 {breadCumbsData?.map((item) => (
-                                    <li className="cursor-pointer" key={item.id}>
+
+                                    <li className="cursor-pointer" key={item.link}>
                                         <Link
                                             to={item.link}
                                             className="hover:underline text-white-600 flex items-center"
