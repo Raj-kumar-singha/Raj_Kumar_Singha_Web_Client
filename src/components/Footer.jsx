@@ -71,7 +71,7 @@ const Footer = () => {
                     </div>
                     <div className="mt-4 flex justify-center md:justify-start">
                         <Link to="/buy-me-a-coffee" className="w-full md:w-auto">
-                            <button className="flex items-center gap-2 bg-yellow-400 px-4 py-2 rounded-md hover:bg-yellow-500 w-full md:w-auto justify-center">
+                            <button className="flex items-center gap-2 bg-yellow-400 px-4 py-2 rounded-md hover:bg-yellow-500 w-full md:w-auto justify-center" onClick={scrollToTop}>
                                 <BsCupStraw size={20} /> Buy Me a Coffee
                             </button>
                         </Link>
