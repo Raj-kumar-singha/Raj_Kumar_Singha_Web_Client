@@ -54,7 +54,7 @@ const BuyCoffePage = () => {
         <div className="flex flex-col items-center justify-between space-y-6">
           <div className="flex items-center justify-center space-x-6 space-y-4 flex-wrap">
             <img
-              src="/download.jfif"
+              src="/coffe-cup.jfif"
               alt="Coffee"
               className="w-12 h-12 transform hover:scale-110 transition-transform animate-bounce"
             />
