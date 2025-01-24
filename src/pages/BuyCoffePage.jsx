@@ -49,14 +49,21 @@ const BuyCoffePage = () => {
           Love my work? Support me by buying me a coffee! Your support means a
           lot ❤️.
         </p>
-        <p className="text-gray-700 text-center mb-6">Know More <Link className="border-b-2 border-dotted text-gray-400 border-gray-400 hover:text-blue-500" to={"/about"}>About-Me</Link></p>
+        <p className="text-gray-700 text-center mb-4">Know More <Link className="border-b-2 border-dotted text-gray-400 border-gray-400 hover:text-blue-500" to={"/about"}>About-Me</Link></p>
 
-        <div className="flex flex-col items-center justify-between space-y-6">
+        <div className="flex justify-center align-middle ">
+          <img
+            src="/cofee-up-main.jpg"
+            alt="Coffee"
+            className="w-48 h-48 rounded-full transform hover:scale-110 transition-transform"
+          />
+        </div>
+        <div className="flex flex-col items-center justify-between space-y-5">
           <div className="flex items-center justify-center space-x-6 space-y-4 flex-wrap">
             <img
               src="/coffe-cup.jfif"
               alt="Coffee"
-              className="w-12 h-12 transform hover:scale-110 transition-transform animate-bounce"
+              className="w-24 h-24 rounded-full transform hover:scale-110 transition-transform animate-bounce"
             />
             <p className="text-2xl font-medium text-gray-700">x</p>
             <div className="flex space-x-2">
