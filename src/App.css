@@ -1,12 +1,12 @@
 .Header {
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 99;
+  top     : 0;
+  left    : 0;
+  z-index : 99;
 }
 
-.Hamburger_Icon.btn-circle.btn{
-  border: transparent;
+.Hamburger_Icon.btn-circle.btn {
+  border          : transparent;
   background-color: transparent;
 }
 
@@ -21,7 +21,7 @@
   margin-top: 72px;
 }
 
-.FooterHeaderText{
+.FooterHeaderText {
   border-bottom: 2px solid rgb(248, 211, 3);
-  opacity: 2;
+  opacity      : 2;
 }
