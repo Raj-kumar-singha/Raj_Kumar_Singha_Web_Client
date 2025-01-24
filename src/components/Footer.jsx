@@ -93,6 +93,7 @@ const Footer = () => {
             <p className="text-center mt-5 text-gray-500 text-sm">
                 © {new Date().getFullYear()} Raj All rights reserved.<br /> Developed by{" "}
                 <Link
+                    onClick={scrollToTop}
                     to="/about"
                     className="border-b border-dotted border-gray-500 hover:text-blue-600 hover:border-blue-600 transition-colors duration-300 ease-in-out"
                 >
