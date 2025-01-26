@@ -25,3 +25,13 @@
   border-bottom: 2px solid rgb(248, 211, 3);
   opacity      : 2;
 }
+
+
+.about-second-slidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.about-second-slidebar {
+  -ms-overflow-style: none;
+  scrollbar-width   : none;
+}
