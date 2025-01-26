@@ -56,11 +56,11 @@ const AboutPage = () => {
                     {/* First Column */}
                     {isSidebarOpen && (
                         < div className="col-span-12 md:col-span-3 bg-orange-200 p-4 py-12" >
-                            <div div className="flex justify-center align-middle mx-auto pb-4 w-52 h-52 border-8 border-solid border-red-900 rounded-full " >
+                            <div className="flex justify-center align-middle mx-auto pb-4 w-52 h-52 md:w-32 md:h-32 lg:w-52 lg:h-52 border-8 border-solid border-red-900 rounded-full" >
                                 <img
                                     src="/raj_kumar.jpg"
                                     alt="Coffee"
-                                    className="w-48 h-48 rounded-full transform hover:scale-110 transition-transform"
+                                    className="w-48 h-48  md:w-28 md:h-28 lg:w-48 lg:h-48 rounded-full transform hover:scale-110 transition-transform"
                                 />
                             </div >
                             <p className='text-center text-xl text-black-900 '>@Raj-kumar-singha</p>
@@ -94,7 +94,7 @@ const AboutPage = () => {
                                 <p className={`text-2xl text-black-900 cursor-pointer ${activeTab === "technicalSkills" ? "font-bold underline decoration-blue-500 decoration-2 underline-offset-4" : ""}`} onClick={() => setActiveTab("technicalSkills")}>Technical Skills</p>
                             </div>
                             <p className='text-center text-2xl text-black-900 py-3'>Follow Me On:-</p>
-                            <div className="flex flex-row gap-3 justify-center align-middle ">
+                            <div className="flex flex-row gap-3 justify-center align-middle flex-wrap ">
                                 <Link
                                     to="https://github.com/Raj-kumar-singha"
                                     target="_blank"
@@ -164,7 +164,7 @@ const AboutPage = () => {
                         {/* Sidebar Toggle Button */}
                         <button
                             onClick={toggleSidebar}
-                            className="p-2 bg-orange-100 text-gray rounded-full shadow-md"
+                            className="p-2 hidden md:block bg-orange-100 text-gray rounded-full shadow-md"
                         >
                             {isSidebarOpen ? (
                                 <BsFullscreenExit size={20} />
@@ -173,7 +173,7 @@ const AboutPage = () => {
                             )}
                         </button>
 
-                        <div className="h-full max-h-[600px] overflow-y-scroll px-8 pb-8 ">
+                        <div className="about-second-slidebar h-full max-h-[600px] overflow-y-scroll px-8 pb-8 ">
 
                             {renderTabContent()}
                         </div>
