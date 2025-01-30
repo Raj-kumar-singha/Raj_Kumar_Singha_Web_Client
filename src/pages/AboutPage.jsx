@@ -164,7 +164,8 @@ const AboutPage = () => {
                         {/* Sidebar Toggle Button */}
                         <button
                             onClick={toggleSidebar}
-                            className="p-2 hidden md:block bg-orange-100 text-gray rounded-full shadow-md"
+                            // className="p-2 hidden md:block bg-orange-100 text-gray rounded-full shadow-md"
+                            className="p-2  bg-orange-100 text-gray rounded-full shadow-md"
                         >
                             {isSidebarOpen ? (
                                 <BsFullscreenExit size={20} />
