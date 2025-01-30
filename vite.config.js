@@ -5,6 +5,18 @@ dotenv.config();
 
 export default defineConfig({
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          // lodash: ['lodash'],
+          // Add other large libraries here
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+  },
   // server: {
   //   proxy: {
   //     "/api": {
@@ -15,3 +27,4 @@ export default defineConfig({
   //   },
   // },
 })
+
