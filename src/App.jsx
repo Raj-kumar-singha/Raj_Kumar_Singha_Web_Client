@@ -10,6 +10,7 @@ import GalleryPage from './pages/GalleryPage';
 import AboutPage from './pages/AboutPage';
 import BuyCoffePage from './pages/BuyCoffePage';
 import ContactMePage from './pages/ContactMePage';
+import UserInfo from './pages/TesPage';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/contact-me" element={<ContactMePage />} />
       <Route path="/buy-me-a-coffee" element={<BuyCoffePage />} />
+      <Route path="/test" element={<UserInfo />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axiosInstance from '../utils/axiosInstace';
 import { toast } from "react-toastify";
+import { axiosInstance } from './../utils/axiosUrl';
 
 const Login = () => {
     const [email, setEmail] = useState('');
