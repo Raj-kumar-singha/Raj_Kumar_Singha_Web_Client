@@ -14,7 +14,7 @@ export const fetchIp = async () => {
 
 // Fetch location using IP
 export const fetchLocation = async (ip) => {
-    const response = await axios.get(`http://ip-api.com/json/${ip}`);
+    const response = await axios.get(`https://ip-api.com/json/${ip}`);
     return response.data;
 };
 
