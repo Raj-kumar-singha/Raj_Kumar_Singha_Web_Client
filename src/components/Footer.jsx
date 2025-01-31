@@ -66,7 +66,7 @@ const Footer = () => {
                 {/* Company Info */}
                 <div className="flex flex-col items-center md:items-start">
                     <img
-                        src="/raj-image.png"
+                        src="/raj-logo.png"
                         alt="Raj"
                         width={120}
                         height={50}
