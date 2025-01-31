@@ -69,7 +69,7 @@ const Header = () => {
                 </div>
                 <Link className="btn btn-ghost text-xl hamberger-small" to={'/'}>
                     <img
-                        src="/raj-image.png"
+                        src="/raj-logo.png"
                         alt="Raj"
                         width={120}
                         height={50}
