@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axiosInstance from "../utils/axiosInstace";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Bouncify_Api_Key, Bouncify_Endpoint } from "../utils/constants";
+import { axiosInstance } from './../utils/axiosUrl';
 
 const Signup = () => {
     const [email, setEmail] = useState("");

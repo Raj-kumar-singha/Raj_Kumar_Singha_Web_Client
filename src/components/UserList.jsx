@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axiosInstance from '../utils/axiosInstace';
+import { axiosInstance } from './../utils/axiosUrl';
 
 const UserList = ({ role }) => {
     const [users, setUsers] = useState([]);

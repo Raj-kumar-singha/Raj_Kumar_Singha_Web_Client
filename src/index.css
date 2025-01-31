@@ -128,3 +128,19 @@
 .skill-card:hover .skill-card-back {
   transform: rotateY(0deg);
 }
+
+.user-info-container {
+  font-family: 'Poppins', sans-serif;
+}
+
+.info-box {
+  background   : rgba(255, 255, 255, 0.1);
+  padding      : 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition   : transform 0.3s ease;
+}
+
+.info-box:hover {
+  transform: translateY(-5px);
+}

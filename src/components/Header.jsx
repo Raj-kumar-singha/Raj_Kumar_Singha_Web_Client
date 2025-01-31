@@ -35,7 +35,7 @@ const Header = () => {
         <div className="navbar bg-base-100 Header">
             <div className="navbar-start">
                 <div className="dropdown" ref={dropdownRef}>
-                    <button onClick={toggleMenu} className="btn btn-ghost lg:hidden">
+                    <button onClick={toggleMenu} className="btn btn-ghost lg:hidden hamberger-small">
                         <label className="btn btn-circle swap swap-rotate Hamburger_Icon">
                             {isOpen ? (
                                 <svg
@@ -67,7 +67,14 @@ const Header = () => {
                         <li><Link to={'/contact-me'}>Contact Me</Link></li>
                     </ul>
                 </div>
-                <Link className="btn btn-ghost text-xl" to={'/'}>Raj</Link>
+                <Link className="btn btn-ghost text-xl hamberger-small" to={'/'}>
+                    <img
+                        src="/raj-image.png"
+                        alt="Raj"
+                        width={120}
+                        height={50}
+                    />
+                </Link>
             </div>
 
             <div className="navbar-center hidden lg:flex">
@@ -82,7 +89,7 @@ const Header = () => {
 
             <div className="navbar-end">
                 {/* <div className="px-6 md:px-4 grid grid-cols-2 gap-2">        */}
-                <div className="px-2">       
+                <div className="px-2">
                     <label className="grid cursor-pointer place-items-center">
                         <input
                             type="checkbox"

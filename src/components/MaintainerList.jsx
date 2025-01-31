@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import axiosInstance from "../utils/axiosInstace";
 import { useNavigate } from "react-router-dom";
+import { axiosInstance } from './../utils/axiosUrl';
 
 const MaintainerList = () => {
     const [users, setUsers] = useState([]);
