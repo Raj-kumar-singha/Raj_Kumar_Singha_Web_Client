@@ -105,7 +105,7 @@ const Footer = () => {
                         ) : location ? (
                             <p className="flex items-center">
                                 <FaMapMarkerAlt className="mr-2 text-green-400" /> Location:
-                                <span className="ml-2">{location.city}, {location.country}</span>
+                                <span className="ml-2">{location.city}, {location.country_name}</span>
                             </p>
                         ) : (<p className="text-red-500">Weather data unavailable</p>)}
 

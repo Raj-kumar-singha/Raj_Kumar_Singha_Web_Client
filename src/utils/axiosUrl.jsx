@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Weather_Api} from './constants';
+import { IP_Api, Weather_Api } from './constants';
 
 // Base configuration for APIs
 export const axiosInstance = axios.create({
@@ -12,9 +12,9 @@ export const fetchIp = async () => {
     return response.data.ip;
 };
 
-// Fetch location using IP
+// Fetch location using IP (ipgeolocation.io)
 export const fetchLocation = async (ip) => {
-    const response = await axios.get(`https://ip-api.com/json/${ip}`);
+    const response = await axios.get(`https://api.ipgeolocation.io/ipgeo?apiKey=${IP_Api}&ip=${ip}`);
     return response.data;
 };
 
