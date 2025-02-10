@@ -125,11 +125,11 @@ const Header = () => {
                         </svg>
                     </label>
                 </div>
-                {isLoggedIn ? (
+                {/* {isLoggedIn ? (
                     <button onClick={handleLogout} className="btn">Logout</button>
                 ) : (
                     <Link to="/signup" className="btn">Sign Up</Link>
-                )}
+                )} */}
             </div>
         </div>
     );
