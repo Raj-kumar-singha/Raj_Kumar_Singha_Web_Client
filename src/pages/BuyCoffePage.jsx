@@ -7,9 +7,11 @@ import { SiPhonepe, SiPaytm, SiGooglepay } from "react-icons/si";
 const BuyCoffePage = () => {
   const [quantity, setQuantity] = useState(1);
   const [qrCode, setQrCode] = useState(null);
-  const pricePerCup = 10;
+  const pricePerCup = 1;
   const upiId = "rajkumarsingha@axisbank";
   const totalAmount = quantity * pricePerCup;
+  const merchantName = "Raj Kumar Singha";
+  const transactionNote = "Thanks😍";
 
   const handleQuantityChange = (value) => {
     if (value >= 1) {
@@ -18,31 +20,100 @@ const BuyCoffePage = () => {
   };
 
   const generateQRCode = () => {
-    const upiLink = `upi://pay?pa=${upiId}&pn=Raj Kumar singha&am=${totalAmount}&cu=INR&tn=Thanks for your support!`;
+    const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&am=${totalAmount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
 
     setQrCode(upiLink);
   };
 
+  // const openUPIApp = (app) => {
+  //   let upiLink = `upi://pay?pa=${upiId}&pn=Raj Kumar singha&am=${totalAmount}&cu=INR&tn=Thanks for your support!`;
+
+  //   switch (app) {
+  //     case "gpay":
+  //       upiLink = `tez://upi/pay?pa=${upiId}&pn=BuyMeCoffee&am=${totalAmount}&cu=INR`;
+  //       break;
+  //     case "phonepe":
+  //       upiLink = `phonepe://upi/pay?pa=${upiId}&pn=BuyMeCoffee&am=${totalAmount}&cu=INR`;
+  //       break;
+  //     case "paytm":
+  //       upiLink = `paytmmp://upi/pay?pa=${upiId}&pn=BuyMeCoffee&am=${totalAmount}&cu=INR`;
+  //       break;
+  //     case "amazonpay":
+  //       upiLink = `amazon://payments/upi/pay?pa=${upiId}&pn=BuyMeCoffee&am=${totalAmount}&cu=INR`;
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   window.location.href = upiLink;
+  // };
+
+
   const openUPIApp = (app) => {
-    let upiLink = `upi://pay?pa=${upiId}&pn=Raj Kumar singha&am=${totalAmount}&cu=INR&tn=Thanks for your support!`;
+    // Base UPI parameters
+    const baseParams = {
+      pa: upiId,
+      pn: merchantName,
+      am: totalAmount.toString(),
+      cu: 'INR',
+      tn: transactionNote,
+    };
+
+    // Convert parameters to URL search params
+    const searchParams = new URLSearchParams();
+    Object.entries(baseParams).forEach(([key, value]) => {
+      searchParams.append(key, value);
+    });
+
+    let intentUrl = '';
+    let fallbackUrl = '';
 
     switch (app) {
       case "gpay":
-        upiLink = `tez://upi/pay?pa=${upiId}&pn=BuyMeCoffee&am=${totalAmount}&cu=INR`;
+        // Google Pay
+        intentUrl = `tez://upi/pay?${searchParams.toString()}`;
+        fallbackUrl = `https://pay.google.com/pay/u/0/home#${searchParams.toString()}`;
         break;
+
       case "phonepe":
-        upiLink = `phonepe://upi/pay?pa=${upiId}&pn=BuyMeCoffee&am=${totalAmount}&cu=INR`;
+        // PhonePe
+        intentUrl = `phonepe://pay?${searchParams.toString()}`;
+        fallbackUrl = `https://phon.pe/ru_${upiId}`;
         break;
+
       case "paytm":
-        upiLink = `paytmmp://upi/pay?pa=${upiId}&pn=BuyMeCoffee&am=${totalAmount}&cu=INR`;
+        // Paytm
+        intentUrl = `paytmmp://pay?${searchParams.toString()}`;
+        fallbackUrl = `https://paytm.com/`;
         break;
+
       case "amazonpay":
-        upiLink = `amazon://payments/upi/pay?pa=${upiId}&pn=BuyMeCoffee&am=${totalAmount}&cu=INR`;
+        // Amazon Pay
+        intentUrl = `amazonpay://pay?${searchParams.toString()}`;
+        fallbackUrl = `https://www.amazon.in/gp/movies/order/${upiId}`;
         break;
+
       default:
+        intentUrl = `upi://pay?${searchParams.toString()}`;
         break;
     }
-    window.location.href = upiLink;
+
+    // Try to open the app
+    const tryToOpenApp = () => {
+      const now = new Date().getTime();
+
+      // Try to open the app
+      window.location.href = intentUrl;
+
+      // If app doesn't open within 3 seconds, redirect to fallback URL
+      setTimeout(() => {
+        if (new Date().getTime() - now < 3000) {
+          window.location.href = fallbackUrl;
+        }
+      }, 2500);
+    };
+
+    // Open the payment app
+    tryToOpenApp();
   };
 
   // const handlePayment = () => {
