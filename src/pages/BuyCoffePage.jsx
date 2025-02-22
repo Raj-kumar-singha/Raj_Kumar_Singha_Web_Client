@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
 import { FaAmazonPay } from "react-icons/fa";
 import { SiPhonepe, SiPaytm, SiGooglepay } from "react-icons/si";
+import { FaCopy, FaCheckCircle } from 'react-icons/fa';
 
 const BuyCoffePage = () => {
   const [quantity, setQuantity] = useState(1);
   const [qrCode, setQrCode] = useState(null);
-  const pricePerCup = 1;
+  const [isCopied, setIsCopied] = useState(false);
+  const pricePerCup = 50;
   const upiId = "rajkumarsingha@axisbank";
   const totalAmount = quantity * pricePerCup;
   const merchantName = "Raj Kumar Singha";
@@ -25,97 +27,12 @@ const BuyCoffePage = () => {
     setQrCode(upiLink);
   };
 
-  // const openUPIApp = (app) => {
-  //   let upiLink = `upi://pay?pa=${upiId}&pn=Raj Kumar singha&am=${totalAmount}&cu=INR&tn=Thanks for your support!`;
-
-  //   switch (app) {
-  //     case "gpay":
-  //       upiLink = `tez://upi/pay?pa=${upiId}&pn=BuyMeCoffee&am=${totalAmount}&cu=INR`;
-  //       break;
-  //     case "phonepe":
-  //       upiLink = `phonepe://upi/pay?pa=${upiId}&pn=BuyMeCoffee&am=${totalAmount}&cu=INR`;
-  //       break;
-  //     case "paytm":
-  //       upiLink = `paytmmp://upi/pay?pa=${upiId}&pn=BuyMeCoffee&am=${totalAmount}&cu=INR`;
-  //       break;
-  //     case "amazonpay":
-  //       upiLink = `amazon://payments/upi/pay?pa=${upiId}&pn=BuyMeCoffee&am=${totalAmount}&cu=INR`;
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  //   window.location.href = upiLink;
-  // };
-
-
-  const openUPIApp = (app) => {
-    // Base UPI parameters
-    const baseParams = {
-      pa: upiId,
-      pn: merchantName,
-      am: totalAmount.toString(),
-      cu: 'INR',
-      tn: transactionNote,
-    };
-
-    // Convert parameters to URL search params
-    const searchParams = new URLSearchParams();
-    Object.entries(baseParams).forEach(([key, value]) => {
-      searchParams.append(key, value);
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(upiId).then(() => {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 1000); // Reset after 2 seconds
     });
-
-    let intentUrl = '';
-    let fallbackUrl = '';
-
-    switch (app) {
-      case "gpay":
-        // Google Pay
-        intentUrl = `tez://upi/pay?${searchParams.toString()}`;
-        fallbackUrl = `https://pay.google.com/pay/u/0/home#${searchParams.toString()}`;
-        break;
-
-      case "phonepe":
-        // PhonePe
-        intentUrl = `phonepe://pay?${searchParams.toString()}`;
-        fallbackUrl = `https://phon.pe/ru_${upiId}`;
-        break;
-
-      case "paytm":
-        // Paytm
-        intentUrl = `paytmmp://pay?${searchParams.toString()}`;
-        fallbackUrl = `https://paytm.com/`;
-        break;
-
-      case "amazonpay":
-        // Amazon Pay
-        intentUrl = `amazonpay://pay?${searchParams.toString()}`;
-        fallbackUrl = `https://www.amazon.in/gp/movies/order/${upiId}`;
-        break;
-
-      default:
-        intentUrl = `upi://pay?${searchParams.toString()}`;
-        break;
-    }
-
-    // Try to open the app
-    const tryToOpenApp = () => {
-      const now = new Date().getTime();
-
-      // Try to open the app
-      window.location.href = intentUrl;
-
-      // If app doesn't open within 3 seconds, redirect to fallback URL
-      setTimeout(() => {
-        if (new Date().getTime() - now < 3000) {
-          window.location.href = fallbackUrl;
-        }
-      }, 2500);
-    };
-
-    // Open the payment app
-    tryToOpenApp();
   };
-
   // const handlePayment = () => {
   //   const totalAmount = quantity * pricePerCup * 100;
   //   const options = {
@@ -164,31 +81,38 @@ const BuyCoffePage = () => {
               level="H"
               includeMargin={true}
               className="shadow-lg  rounded-md" />
-            <p className="mt-4 text-gray-700">Scan this QR using any UPI app</p>
+
+            <p className="flex items-center mt-4 bg-gray-100 border border-gray-200 p-3 rounded-md">
+              <span >{upiId}</span>
+              <button onClick={copyToClipboard} className="ml-2">
+                {isCopied ? (
+                  <FaCheckCircle className="text-green-500 size-3" />
+                ) : (
+                  <FaCopy className="text-blue-400 hover:text-blue-300 cursor-pointer size-3" />
+                )}
+              </button>
+            </p>
+            <p className="mt-4 text-gray-700 text-center">Scan QR code or pay directly via upi id to complete your transaction using any upi app</p>
             <div className="flex justify-center gap-4 mt-3">
               {/* Google Pay */}
               <div className="p-1 rounded-full bg-white shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-110"
-                onClick={() => openUPIApp("gpay")}
               >
                 <SiGooglepay className="w-8 h-8" style={{ color: '#4285F4' }} />
               </div>
 
               {/* PhonePe */}
               <div className="p-1 rounded-full bg-white shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-110"
-                onClick={() => openUPIApp("phonepe")}
               >
                 <SiPhonepe className="w-8 h-8" style={{ color: '#5F259F' }} />
               </div>
 
               {/* Paytm */}
               <div className="p-1 rounded-full bg-white shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-110"
-                onClick={() => openUPIApp("paytm")}
               >
                 <SiPaytm className="w-8 h-8" style={{ color: '#00BAF2' }} />
               </div>
 
               <div className="p-1 rounded-full bg-white shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-110"
-                onClick={() => openUPIApp("amazonpay")}
               >
                 <FaAmazonPay className="w-8 h-8" style={{ color: '#FF9900' }} />
               </div>
@@ -252,7 +176,7 @@ const BuyCoffePage = () => {
               {/* Description below the quantity selector */}
               <p className="text-gray-600 text-center text-base">
                 Select the number of coffees or enter a custom amount. Each cup is
-                just ₹50.
+                just ₹10.
               </p>
             </div>
 
