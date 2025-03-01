@@ -5,16 +5,16 @@ import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { BsHouseDoor, BsTelephone } from "react-icons/bs";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 import PageBanner from "../components/PageBanner";
 import {
-    emailJsPublicKey,
-    emailJsServiceId,
-    emailJsTempplateId,
-    myWeb,
-    superBaseKey,
-    superBaseUrl,
+  emailJsPublicKey,
+  emailJsServiceId,
+  emailJsTempplateId,
+  myWeb,
+  superBaseKey,
+  superBaseUrl,
 } from "../utils/constants";
 emailjs.init(emailJsPublicKey);
 
@@ -209,19 +209,6 @@ const ContactMePage = () => {
           `}
         </script>
       </Helmet>
-
-      {/* Toast Container for notifications */}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
 
       {/* Banner Section */}
       <PageBanner BannerData={BannerData} />

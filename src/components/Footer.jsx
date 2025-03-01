@@ -1,4 +1,7 @@
+import { createClient } from "@supabase/supabase-js";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
+import { AiOutlineGlobal } from "react-icons/ai";
 import {
   BsChevronDoubleUp,
   BsCupStraw,
@@ -11,20 +14,17 @@ import {
   BsYoutube,
 } from "react-icons/bs";
 import {
-  FaMapMarkerAlt,
   FaCalendarAlt,
+  FaCheckCircle,
   FaClock,
   FaCopy,
-  FaCheckCircle,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { fetchIp, fetchLocation, fetchWeather } from "./../utils/axiosUrl";
-import { AiOutlineGlobal } from "react-icons/ai";
-import { createClient } from "@supabase/supabase-js";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
-import { ToastContainer, toast } from "react-toastify";
 import { superBaseKey, superBaseUrl } from "../utils/constants";
+import { fetchIp, fetchLocation, fetchWeather } from "./../utils/axiosUrl";
 
 // Initialize Supabase client
 const supabase = createClient(superBaseUrl, superBaseKey);
@@ -139,18 +139,6 @@ const Footer = () => {
 
   return (
     <footer className="py-10 px-5">
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Company Info */}
         <div className="flex flex-col items-center md:items-start">

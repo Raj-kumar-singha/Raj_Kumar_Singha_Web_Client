@@ -1,10 +1,13 @@
-import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef, useContext } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { ThemeContext } from "../context/ThemeContext";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
 
   const handleLogout = () => {
     localStorage.removeItem("loggedIn");
@@ -30,6 +33,17 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  // Function to check if a link is active
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
+
+  // CSS for active link
+  // const activeLinkStyle =
+  //   "relative after:content-[''] after:absolute after:w-1/2 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-purple-500 after:bottom-0 after:left-0 after:transition-all after:duration-300 after:transform after:origin-left";
+  const activeLinkStyle =
+    "null";
 
   return (
     <div className="navbar bg-base-100 Header">
@@ -67,19 +81,41 @@ const Header = () => {
             }`}
           >
             <li>
-              <Link to={"/"}>Home</Link>
+              <Link to={"/"} className={isActive("/") ? activeLinkStyle : ""}>
+                Home
+              </Link>
             </li>
             <li>
-              <Link to={"/blogs"}>Blog</Link>
+              <Link
+                to={"/blogs"}
+                className={isActive("/blogs") ? activeLinkStyle : ""}
+              >
+                Blog
+              </Link>
             </li>
             <li>
-              <Link to={"/gallery"}>Gallery</Link>
+              <Link
+                to={"/gallery"}
+                className={isActive("/gallery") ? activeLinkStyle : ""}
+              >
+                Gallery
+              </Link>
             </li>
             <li>
-              <Link to={"/about"}>About</Link>
+              <Link
+                to={"/about"}
+                className={isActive("/about") ? activeLinkStyle : ""}
+              >
+                About
+              </Link>
             </li>
             <li>
-              <Link to={"/contact-me"}>Contact Me</Link>
+              <Link
+                to={"/contact-me"}
+                className={isActive("/contact-me") ? activeLinkStyle : ""}
+              >
+                Contact Me
+              </Link>
             </li>
           </ul>
         </div>
@@ -91,30 +127,52 @@ const Header = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 text-base font-semibold">
           <li>
-            <Link to={"/"}>Home</Link>
+            <Link to={"/"} className={isActive("/") ? activeLinkStyle : ""}>
+              Home
+            </Link>
           </li>
           <li>
-            <Link to={"/blogs"}>Blog</Link>
+            <Link
+              to={"/blogs"}
+              className={isActive("/blogs") ? activeLinkStyle : ""}
+            >
+              Blog
+            </Link>
           </li>
           <li>
-            <Link to={"/gallery"}>Gallery</Link>
+            <Link
+              to={"/gallery"}
+              className={isActive("/gallery") ? activeLinkStyle : ""}
+            >
+              Gallery
+            </Link>
           </li>
           <li>
-            <Link to={"/about"}>About</Link>
+            <Link
+              to={"/about"}
+              className={isActive("/about") ? activeLinkStyle : ""}
+            >
+              About
+            </Link>
           </li>
           <li>
-            <Link to={"/contact-me"}>Contact Me</Link>
+            <Link
+              to={"/contact-me"}
+              className={isActive("/contact-me") ? activeLinkStyle : ""}
+            >
+              Contact Me
+            </Link>
           </li>
         </ul>
       </div>
 
       <div className="navbar-end">
-        {/* <div className="px-6 md:px-4 grid grid-cols-2 gap-2">        */}
         <div className="px-2">
           <label className="grid cursor-pointer place-items-center">
             <input
               type="checkbox"
-              value="synthwave"
+              checked={isDarkMode}
+              onChange={toggleTheme}
               className="toggle theme-controller bg-base-content col-span-2 col-start-1 row-start-1"
             />
             <svg

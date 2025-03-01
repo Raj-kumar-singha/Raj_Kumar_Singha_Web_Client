@@ -1,14 +1,19 @@
 // AboutMe.jsx
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { BsX, BsCheckCircle } from "react-icons/bs";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import emailjs from "@emailjs/browser";
-import { CONFIG } from "../utils/config";
 import { createClient } from "@supabase/supabase-js";
-import { ToastContainer, toast } from "react-toastify";
-import { emailJsPublicKey, emailJsServiceId, emailJsTempplateId, emailJsTempplateIdResume, superBaseKey, superBaseUrl } from "../utils/constants";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { BsX } from "react-icons/bs";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+import {
+  emailJsPublicKey,
+  emailJsServiceId,
+  emailJsTempplateIdResume,
+  superBaseKey,
+  superBaseUrl
+} from "../utils/constants";
 
 const supabase = createClient(superBaseUrl, superBaseKey);
 
@@ -132,18 +137,6 @@ const AboutMe = ({ setActiveTab }) => {
 
   return (
     <div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-
       <h2 className="text-4xl font-bold mb-10 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-400">
         About Me
       </h2>
