@@ -4,6 +4,8 @@ import { QRCodeCanvas } from "qrcode.react";
 import { FaAmazonPay } from "react-icons/fa";
 import { SiPhonepe, SiPaytm, SiGooglepay } from "react-icons/si";
 import { FaCopy, FaCheckCircle } from 'react-icons/fa';
+import { Helmet } from "react-helmet";
+import { myWeb } from "../utils/constants";
 
 const BuyCoffePage = () => {
   const [quantity, setQuantity] = useState(1);
@@ -30,37 +32,69 @@ const BuyCoffePage = () => {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(upiId).then(() => {
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 1000); // Reset after 2 seconds
+      setTimeout(() => setIsCopied(false), 1000); // Reset after 1 second
     });
   };
-  // const handlePayment = () => {
-  //   const totalAmount = quantity * pricePerCup * 100;
-  //   const options = {
-  //     key: "YOUR_RAZORPAY_KEY",
-  //     amount: totalAmount,
-  //     currency: "INR",
-  //     name: "Buy Me a Coffee",
-  //     description: `Thanks for buying ${quantity} coffee${quantity > 1 ? "s" : ""}!`,
-  //     handler: function (response) {
-  //       alert(
-  //         `Payment successful! Payment ID: ${response.razorpay_payment_id}`
-  //       );
-  //     },
-  //     prefill: {
-  //       name: "Your Name",
-  //       email: "your-email@example.com",
-  //     },
-  //     theme: {
-  //       color: "#F97316", // Customize Razorpay button color
-  //     },
-  //   };
-
-  //   const razorpay = new window.Razorpay(options);
-  //   razorpay.open();
-  // };
 
   return (
     <div className="appbody min-h-screen bg-gradient-to-r from-yellow-100 via-orange-200 to-pink-100 animate-gradient flex items-center justify-center p-4">
+      <Helmet>
+        <title>Buy Me a Coffee | Support Raj Kumar Singha</title>
+        <meta
+          name="description"
+          content="Support Raj Kumar Singha's work by buying him a coffee. Your contribution helps in creating more high-quality content and projects."
+        />
+        <meta
+          name="keywords"
+          content="buy me a coffee, support developers, Raj Kumar Singha, donation, UPI payment, coffee donation"
+        />
+        <link rel="canonical" href={`${myWeb}/buy-coffee`} />
+        <meta property="og:title" content="Buy Me a Coffee | Support Raj Kumar Singha" />
+        <meta
+          property="og:description"
+          content="Support Raj Kumar Singha's work by buying him a coffee. Your contribution helps in creating more high-quality content and projects."
+        />
+        <meta property="og:image" content="/cofee-up-main.jpg" />
+        <meta property="og:url" content={`${myWeb}/buy-coffee`} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Buy Me a Coffee | Support Raj Kumar Singha" />
+        <meta
+          name="twitter:description"
+          content="Support Raj Kumar Singha's work by buying him a coffee. Your contribution helps in creating more high-quality content and projects."
+        />
+        <meta name="twitter:image" content="/cofee-up-main.jpg" />
+        <script type="application/ld+json">
+          {`
+          {
+              "@context": "https://schema.org",
+              "@type": "DonateAction",
+              "name": "Buy Me a Coffee | Support Raj Kumar Singha",
+              "description": "Support Raj Kumar Singha's work by buying him a coffee. Your contribution helps in creating more high-quality content and projects.",
+              "url": "${myWeb}/buy-coffee",
+              "agent": {
+                  "@type": "Person",
+                  "name": "Raj Kumar Singha",
+                  "image": "/cofee-up-main.jpg"
+              },
+              "recipient": {
+                  "@type": "Person",
+                  "name": "Raj Kumar Singha"
+              },
+              "potentialAction": {
+                  "@type": "PayAction",
+                  "target": {
+                      "@type": "EntryPoint",
+                      "urlTemplate": "upi://pay?pa=${upiId}"
+                  },
+                  "price": "${pricePerCup}",
+                  "priceCurrency": "INR"
+              }
+          }
+          `}
+        </script>
+      </Helmet>
+
       <div className="max-w-3xl w-full bg-white shadow-lg rounded-2xl p-8 animate__animated animate__fadeIn">
         {/* Heading */}
         <h1 className="text-4xl font-extrabold text-orange-600 text-center mb-6">
@@ -136,7 +170,7 @@ const BuyCoffePage = () => {
             <div className="flex justify-center align-middle ">
               <img
                 src="/cofee-up-main.jpg"
-                alt="Coffee"
+                alt="Coffee Cup for Donation"
                 className="w-48 h-48 rounded-full transform hover:scale-110 transition-transform"
               />
             </div>
@@ -144,7 +178,7 @@ const BuyCoffePage = () => {
               <div className="flex items-center justify-center space-x-6 space-y-4 flex-wrap">
                 <img
                   src="/coffe-cup.jfif"
-                  alt="Coffee"
+                  alt="Coffee Cup"
                   className="w-24 h-24 rounded-full transform hover:scale-110 transition-transform animate-bounce"
                 />
                 <p className="text-2xl font-medium text-gray-700">x</p>
@@ -176,7 +210,7 @@ const BuyCoffePage = () => {
               {/* Description below the quantity selector */}
               <p className="text-gray-600 text-center text-base">
                 Select the number of coffees or enter a custom amount. Each cup is
-                just ₹10.
+                just ₹{pricePerCup}.
               </p>
             </div>
 

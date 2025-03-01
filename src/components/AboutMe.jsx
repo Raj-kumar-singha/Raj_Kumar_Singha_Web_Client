@@ -1,83 +1,101 @@
 // AboutMe.jsx
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { BsX } from "react-icons/bs";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-// import emailjs from '@emailjs/browser';
-import { CONFIG } from '../utils/config';
+import { BsX, BsCheckCircle } from "react-icons/bs";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import emailjs from "@emailjs/browser";
+import { CONFIG } from "../utils/config";
+import { createClient } from "@supabase/supabase-js";
+import { ToastContainer, toast } from "react-toastify";
+import { emailJsPublicKey, emailJsServiceId, emailJsTempplateId, emailJsTempplateIdResume, superBaseKey, superBaseUrl } from "../utils/constants";
+
+const supabase = createClient(superBaseUrl, superBaseKey);
+
+// Initialize EmailJS
+emailjs.init(emailJsPublicKey);
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .min(2, 'Name is too short')
-    .max(50, 'Name is too long')
-    .required('Name is required'),
+    .min(2, "Name is too short")
+    .max(50, "Name is too long")
+    .required("Name is required"),
   email: Yup.string()
-    .email('Invalid email format')
-    .required('Email is required'),
+    .email("Invalid email format")
+    .required("Email is required"),
   phone: Yup.string()
-    .matches(/^[0-9]{10}$/, 'Phone number must be 10 digits')
-    .required('Phone number is required'),
+    .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
+    .required("Phone number is required"),
 });
 
 const AboutMe = ({ setActiveTab }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const appendToGoogleSheet = async (formData) => {
+  // Function to save data to Supabase
+  const saveToSupabase = async (formData) => {
     try {
-      const date = new Date().toLocaleString();
-      const values = [[formData.name, formData.email, formData.phone, date]];
-
-      const response = await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.GOOGLE_SHEETS_ID}/values/Sheet1!A:D:append?valueInputOption=USER_ENTERED`,
+      const { data, error } = await supabase.from("resume_downloads").insert([
         {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${CONFIG.GOOGLE_SHEETS_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            values: values
-          }),
-        }
-      );
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          downloaded_at: new Date().toISOString(),
+        },
+      ]);
 
-      if (!response.ok) {
-        throw new Error('Failed to append to Google Sheets');
-      }
+      if (error) throw error;
+      return true;
     } catch (error) {
-      console.error('Error saving to Google Sheets:', error);
-      throw error;
+      console.error("Error saving to Supabase:", error);
+      return false;
     }
   };
 
+  // Function to send confirmation email
   const sendConfirmationEmail = async (formData) => {
     try {
-      const templateParams = {
+      // Send confirmation email to the user
+      await emailjs.send(emailJsServiceId, emailJsTempplateIdResume, {
         to_name: formData.name,
         to_email: formData.email,
-        message: 'Thank you for downloading my resume. I will get back to you soon!'
-      };
+        message: `Thank you for downloading my resume.`,
+      });
 
-      // await emailjs.send(
-      //   'YOUR_SERVICE_ID',
-      //   'YOUR_TEMPLATE_ID',
-      //   templateParams,
-      //   'YOUR_PUBLIC_KEY'
-      // );
+      return true;
     } catch (error) {
-      console.error('Error sending email:', error);
-      throw error;
+      console.log("Error sending email:", error);
+      return false;
     }
   };
 
+  // Handle form submission
   const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      // Save to Google Sheets
-      await appendToGoogleSheet(values);
+      // Save data to Supabase
+      const savedToSupabase = await saveToSupabase(values);
 
-      // Send confirmation email
-      await sendConfirmationEmail(values);
+      // Try to send confirmation email
+      let emailSent = false;
+      try {
+        emailSent = await sendConfirmationEmail(values);
+      } catch (emailError) {
+        console.error("Email sending failed:", emailError);
+      }
+
+      // Show appropriate toast notification
+      if (savedToSupabase && emailSent) {
+        toast.success(
+          "Thanks for downloading! Check your email for confirmation."
+        );
+      } else if (savedToSupabase) {
+        toast.info(
+          "Resume download successful! Email confirmation could not be sent."
+        );
+      } else {
+        toast.warning(
+          "Resume downloaded, but we couldn't save your information."
+        );
+      }
 
       // Trigger resume download
       const link = document.createElement("a");
@@ -87,13 +105,26 @@ const AboutMe = ({ setActiveTab }) => {
       link.click();
       document.body.removeChild(link);
 
+      // Store in localStorage as backup
+      const storedDownloads = JSON.parse(
+        localStorage.getItem("resumeDownloads") || "[]"
+      );
+      localStorage.setItem(
+        "resumeDownloads",
+        JSON.stringify([
+          ...storedDownloads,
+          { ...values, id: Date.now(), downloadedAt: new Date().toISOString() },
+        ])
+      );
+
       // Reset form and close modal
       resetForm();
       setIsModalOpen(false);
-
     } catch (error) {
-      console.error('Error processing form:', error);
-      alert('There was an error processing your request. Please try again.');
+      console.error("Error processing form:", error);
+      toast.error(
+        "There was an error processing your request. Please try again."
+      );
     } finally {
       setSubmitting(false);
     }
@@ -101,6 +132,18 @@ const AboutMe = ({ setActiveTab }) => {
 
   return (
     <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
       <h2 className="text-4xl font-bold mb-10 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-400">
         About Me
       </h2>
@@ -128,7 +171,9 @@ const AboutMe = ({ setActiveTab }) => {
 
         <dialog
           id="resumeDialog"
-          className={`modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${isModalOpen ? "modal-open" : ""}`}
+          className={`modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${
+            isModalOpen ? "modal-open" : "hidden"
+          }`}
           onClick={(e) => {
             if (e.target.id === "resumeDialog") setIsModalOpen(false);
           }}
@@ -141,13 +186,16 @@ const AboutMe = ({ setActiveTab }) => {
               <BsX size={24} style={{ fontWeight: 900 }} />
             </button>
 
-            <h3 className="text-lg font-bold text-center">Enter Your Details</h3>
+            <h3 className="text-lg font-bold text-center">
+              Enter Your Details
+            </h3>
             <p className="text-sm mb-4 text-center">
-              Once you enter your details and submit, you will be able to download my resume.
+              Once you enter your details and submit, you will be able to
+              download my resume.
             </p>
 
             <Formik
-              initialValues={{ name: '', email: '', phone: '' }}
+              initialValues={{ name: "", email: "", phone: "" }}
               validationSchema={validationSchema}
               onSubmit={handleFormSubmit}
             >
@@ -198,10 +246,11 @@ const AboutMe = ({ setActiveTab }) => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all duration-300 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                      }`}
+                    className={`bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all duration-300 ${
+                      isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                   >
-                    {isSubmitting ? 'Submitting...' : 'Submit & Download'}
+                    {isSubmitting ? "Submitting..." : "Submit & Download"}
                   </button>
                 </Form>
               )}
